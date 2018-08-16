@@ -69,8 +69,10 @@ namespace Tax;
 
     private function sumNetto($data, $pphs)
     {
-        $bruto = $data['basic_salary'] + $data['tunjangan'] + $this->sumPremi($data['basic_salary']);
-        $deduct = $this->sumIuran($data['basic_salary']) + $this->sumBiayaJabatan($bruto);
+        $bruto = $data['basic_salary'] + $data['tunjangan'];
+        $bruto += isset($data['asuransi'])? $data['asuransi'] : $this->sumPremi($data['basic_salary']);
+        $deduct = $this->sumBiayaJabatan($bruto);
+        $deduct += isset($data['iuran']) ? $data['iuran'] :$this->sumIuran($data['basic_salary']);
         return ($bruto - $deduct) + $this->collectiveNettos($pphs);
     }
 
