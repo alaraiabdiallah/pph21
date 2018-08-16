@@ -7,8 +7,13 @@ $pph21 = new Tax\Pph21;
 
 $pph21->setDatas([
     [
-        'basic_salary' => (int)5000000,
-        'tunjangan' => (int)0
-    ]
+        'basic_salary' => 15500000,
+        'tunjangan' => 4738834
+    ],
+    [
+        'basic_salary' => 15500000,
+        'tunjangan' => 2718078
+
+    ],
 ]);
 print_r($pph21->getResults());

@@ -58,6 +58,9 @@ trait TaxComponent
     private function sumJP(int $basic_salary) : int
     {
         $sum = $basic_salary * ($this->jp_rate / 100);
+        if ($basic_salary > $this->jp_limit) {
+            $sum = $this->jp_limit * ($this->jp_rate / 100);
+        }
         return round($sum);
     }
 

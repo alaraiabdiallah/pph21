@@ -18,6 +18,7 @@ trait PropertiesSetter
     protected $bpjstk_rate = 2;
     protected $bpjskes_rate = 4;
     protected $bpjskes_limit = 8000000;
+    protected $jp_limit = 8094000;
     protected $jp_rate = 1;
     protected $bj_rate = 5;
     protected $bj_limit = 500000;
@@ -51,7 +52,7 @@ trait PropertiesSetter
      * @args: float $rate
      * @return void  
      */
-    public function setJPRate(float $limit)
+    public function setJPRate(float $rate)
     {
         $this->jp_rate = $rate;
     }
@@ -60,7 +61,7 @@ trait PropertiesSetter
      * @args: float $rate
      * @return void  
      */
-    public function setBJRate(float $limit)
+    public function setBJRate(float $rate)
     {
         $this->bj_rate = $rate;
     }
@@ -71,7 +72,7 @@ trait PropertiesSetter
      */
     public function setBJLimit(float $limit)
     {
-        $this->bj_limit = $rate;
+        $this->bj_limit = $limit;
     }
 
     /**
@@ -80,7 +81,16 @@ trait PropertiesSetter
      */
     public function setBPJSKesLimit(float $limit)
     {
-        $this->bpjskes_limit = $rate;
+        $this->bpjskes_limit = $limit;
+    }
+
+    /**
+     * @args: float $rate
+     * @return void  
+     */
+    public function setJPLimit(float $limit)
+    {
+        $this->jp_limit = $limit;
     }
 
     /**

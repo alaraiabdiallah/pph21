@@ -34,28 +34,22 @@ namespace Tax;
      */
     public function getResults() : array
     {
-        return [$this->sumPph()];
+        return $this->sumPphs();
     }
 
-    public function sumPph()
+    public function sumPphs()
     {
-        $pph = 0;
+        $pphs = [];
+        $loop = 1;
         foreach ($this->data as $row) {
-            $bruto  = $row['basic_salary'] + $row['tunjangan'] + $this->sumPremi($row['basic_salary']);
-            $deduct = $this->sumIuran($row['basic_salary']) + $this->sumBiayaJabatan($bruto);
-            $netto  = $bruto - $deduct;
-            $nettos = $netto * 12;
-            $pkp    = $nettos - $this->getPTKPAmount();
-            $pph    = ($pkp > 0) ? $this->getPph($pkp) : 0;
+            $netto  = $this->sumNetto($row,$pphs) / $loop;
+            $pkp    = $this->sumPKP($netto);
+            $pph    = ($this->sumPphMonth($pkp) * $loop) - $this->collectivePphs($pphs);
+            $pphs[] = ["netto" => round($netto),"pph" => round($pph)];
+            $loop++;
         }
 
-        return [
-           "bruto" => $bruto,
-           "deduct" => $deduct,
-           "netto" => $nettos,
-           "pkp" => $pkp,
-           "pph" => ($pph / 12),
-        ];
+        return $pphs;
     }
 
     public function getPTKPAmount() : int
@@ -73,6 +67,42 @@ namespace Tax;
         return round($tax);
     }
 
-    
+    private function sumNetto($data, $pphs)
+    {
+        $bruto = $data['basic_salary'] + $data['tunjangan'] + $this->sumPremi($data['basic_salary']);
+        $deduct = $this->sumIuran($data['basic_salary']) + $this->sumBiayaJabatan($bruto);
+        return ($bruto - $deduct) + $this->collectiveNettos($pphs);
+    }
+
+    private function sumPKP($netto)
+    {
+        return ($netto * 12) - $this->getPTKPAmount();
+    }
+
+    private function collectiveNettos($pphs)
+    {
+        $nettos = [];
+        foreach ($pphs as $pph) {
+            $nettos[] = $pph['netto'];
+        }
+
+        return array_sum($nettos);
+    }
+
+    private function collectivePphs($pphs)
+    {
+        $nettos = [];
+        foreach ($pphs as $pph) {
+            $nettos[] = $pph['pph'];
+        }
+
+        return array_sum($nettos);
+    }
+
+    private function sumPphMonth($pkp)
+    {
+        $pph_year = ($pkp > 0) ? $this->getPph($pkp) : 0;
+        return ($pph_year / 12);
+    }
 
  }
