@@ -31,7 +31,14 @@ namespace Tax;
      */
     public function setDatas(array $data)
     {
-        $this->data = $data;
+        try{
+            if (count($data > 12))
+                throw new \Exception("Maximum data is 12", 1);
+                
+            $this->data = $data;
+        }catch(\Exception $e){
+            echo "Caught exception : ".$e->getMessage();
+        }
     }
 
     /**

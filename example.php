@@ -16,5 +16,8 @@ $data = [
         'asuransi' => 0,
         'iuran' => 0
     ],
+    
 ];
-print_r($pph21->calculate($data));
+$tax = $pph21->calculate($data);
+
+print_r($tax);
