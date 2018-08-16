@@ -1,0 +1,18 @@
+{
+    "name": "alaraiabdiallah/pph21",
+    "description": "Library untuk menghitung pajak pph21",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ala Rai",
+            "email": "alaraiabdillah@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Tax\\": "src/"
+        }
+    }
+}
