@@ -32,7 +32,7 @@ namespace Tax;
     public function setDatas(array $data)
     {
         try{
-            if (count($data > 12))
+            if (count($data) > 12)
                 throw new \Exception("Maximum data is 12", 1);
                 
             $this->data = $data;
