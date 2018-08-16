@@ -19,6 +19,12 @@ namespace Tax;
         $this->user_ptkp = $user_ptkp;
     }
 
+    public function calculate(array $data) : array
+    {
+        $this->setDatas($data);
+        return $this->getResults();
+    }
+
     /**
      * @args: array $data
      * @return void  
@@ -37,7 +43,7 @@ namespace Tax;
         return $this->sumPphs();
     }
 
-    public function sumPphs()
+    private function sumPphs()
     {
         $pphs = [];
         $loop = 1;
@@ -52,12 +58,12 @@ namespace Tax;
         return $pphs;
     }
 
-    public function getPTKPAmount() : int
+    private function getPTKPAmount() : int
     {
         return $this->ptkp[$this->user_ptkp];
     }
 
-    public function getPph($pkp) : int
+    private function getPph($pkp) : int
     {
         $tax = 0;
         foreach ($this->tarif_pph as $rate => $limit) {

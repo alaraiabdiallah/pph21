@@ -5,7 +5,7 @@ require_once "vendor/autoload.php";
 
 $pph21 = new Tax\Pph21;
 
-$pph21->setDatas([
+$data = [
     [
         'basic_salary' => 5000000,
         'tunjangan' => 0,
@@ -16,5 +16,5 @@ $pph21->setDatas([
         'asuransi' => 0,
         'iuran' => 0
     ],
-]);
-print_r($pph21->getResults());
+];
+print_r($pph21->calculate($data));
